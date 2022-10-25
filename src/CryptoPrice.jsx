@@ -27,8 +27,6 @@ export function CryptoPrice(props) {
         return() => clearInterval(interval);
     }, []);
 
-    console.log(dataBase);
-
     if (min > dataBase.price) {
         setMin(dataBase.price);
     }
