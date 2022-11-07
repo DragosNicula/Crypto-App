@@ -12,7 +12,7 @@ export function Graph(props) {
                 margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
                 <XAxis dataKey="time" />
-                <YAxis domain={[props.min, props.max]}/>
+                <YAxis type="number" domain={[props.min, props.max]} allowDataOverflow/>
                 <Tooltip />
                 <Legend />
                 <Line type="monotone" dataKey="price" stroke="#097969"/>

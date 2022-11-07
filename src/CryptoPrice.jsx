@@ -4,7 +4,7 @@ import { Graph } from './Graph';
 
 export function CryptoPrice(props) {
     const [dataBase, setDataBase] = useState([{price: 0, time: new Date().toLocaleTimeString()}]);
-    const [count, setCount] = useState(0);
+    const [price, setPrice] = useState();
     const [min, setMin] = useState(Infinity);
     const [max, setMax] = useState(0);
 
@@ -12,6 +12,7 @@ export function CryptoPrice(props) {
         const interval = setInterval(() => {
             if (props.coinName.toLowerCase() === 'bitcoin') {
                 Axios.get("https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT").then(response => {
+                    setPrice(Number(response.data.price))
                     setDataBase(currentDataBase => [...currentDataBase, { price: response.data.price, time: new Date().toLocaleTimeString() }])
                 }).catch(error => console.log(error));
             } else if (props.coinName.toLowerCase() === 'ethereum') {
@@ -27,22 +28,18 @@ export function CryptoPrice(props) {
         return() => clearInterval(interval);
     }, []);
 
-    if (min > dataBase.price) {
-        setMin(dataBase.price);
-    }
-    if (max < dataBase.price) {
-        setMax(dataBase.price);
+    if (min > price) {
+        setMin(price);
+        dataBase.shift(0);
     }
 
-    if (count === 0) {
-        dataBase.shift();
-        setCount(1);
+    if (max < price) {
+        setMax(price);
     }
 
     if (dataBase.length >= 40) {
         dataBase.shift();
     }
-
 
     return(
         <div>
