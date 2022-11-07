@@ -3,10 +3,10 @@ import Axios from 'axios';
 import { Graph } from './Graph';
 
 export function CryptoPrice(props) {
-    const [dataBase, setDataBase] = useState([{price: 0, time: new Date().toLocaleTimeString()}]);
     const [price, setPrice] = useState();
     const [min, setMin] = useState(Infinity);
     const [max, setMax] = useState(0);
+    const [dataBase, setDataBase] = useState([{price: price, time: new Date().toLocaleTimeString()}]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -30,7 +30,6 @@ export function CryptoPrice(props) {
 
     if (min > price) {
         setMin(price);
-        dataBase.shift(0);
     }
 
     if (max < price) {
