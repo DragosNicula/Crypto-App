@@ -18,9 +18,11 @@ export function CryptoPrice(props) {
             } else if (props.coinName.toLowerCase() === 'ethereum') {
                 Axios.get("https://api.binance.com/api/v3/ticker/price?symbol=ETHUSDT").then(response => {
                     setDataBase(currentDataBase => [...currentDataBase, { price: response.data.price, time: new Date().toLocaleTimeString() }])
+                    setPrice(Number(response.data.price))
                 }).catch(error => console.log(error));
             } else if (props.coinName.toLowerCase() === 'xrp') {
                 Axios.get("https://api.binance.com/api/v3/ticker/price?symbol=XRPUSDT").then(response => {
+                    setPrice(Number(response.data.price))
                     setDataBase(currentDataBase => [...currentDataBase, { price: response.data.price, time: new Date().toLocaleTimeString() }])
                 }).catch(error => console.log(error));
             }
